@@ -6,15 +6,12 @@
  * http://mapbox.com/osmdev/2012/11/20/getting-serious-about-svg/
  */
 
-(function () {
-
 var __onAdd = L.Polyline.prototype.onAdd,
-    __onRemove = L.Polyline.prototype.onRemove,
-    __updatePath = L.Polyline.prototype._updatePath,
-    __bringToFront = L.Polyline.prototype.bringToFront;
+__onRemove = L.Polyline.prototype.onRemove,
+__updatePath = L.Polyline.prototype._updatePath,
+__bringToFront = L.Polyline.prototype.bringToFront;
 
-
-var PolylineTextPath = {
+export var PolylineTextPath = {
 
     onAdd: function (map) {
         __onAdd.call(this, map);
@@ -41,19 +38,21 @@ var PolylineTextPath = {
     _textRedraw: function () {
         var text = this._text,
             options = this._textOptions;
+        var svgRendererContainer = this._svgRendererContainer
         if (text) {
-            this.setText(null).setText(text, options);
+            this.setText(null).setText(text, options, svgRendererContainer);
         }
     },
 
-    setText: function (text, options) {
+    setText: function (text, options, svgRendererContainer) {
         this._text = text;
         this._textOptions = options;
+        this._svgRendererContainer = svgRendererContainer
 
         /* If not in SVG mode or Polyline not added to map yet return */
         /* setText will be called by onAdd, using value stored in this._text */
-        if (!L.Browser.svg || typeof this._map === 'undefined') {
-          return this;
+        if (!svgRendererContainer && (!L.Browser.svg || typeof this._map === 'undefined')) {
+            return this;
         }
 
         var defaults = {
@@ -77,7 +76,7 @@ var PolylineTextPath = {
 
         text = text.replace(/ /g, '\u00A0');  // Non breakable spaces
         var id = 'pathdef-' + L.Util.stamp(this);
-        var svg = this._map._renderer._container;
+        var svg = this._svgRendererContainer || this._map._renderer._container;
         this._path.setAttribute('id', id);
 
         if (options.repeat) {
@@ -151,7 +150,7 @@ var PolylineTextPath = {
             L.DomEvent.on(textNode, 'click', this._onMouseClick, this);
 
             var events = ['dblclick', 'mousedown', 'mouseover',
-                          'mouseout', 'mousemove', 'contextmenu'];
+                            'mouseout', 'mousemove', 'contextmenu'];
             for (var i = 0; i < events.length; i++) {
                 L.DomEvent.on(textNode, events[i], this._fireMouseEvent, this);
             }
@@ -160,20 +159,3 @@ var PolylineTextPath = {
         return this;
     }
 };
-
-L.Polyline.include(PolylineTextPath);
-
-L.LayerGroup.include({
-    setText: function(text, options) {
-        for (var layer in this._layers) {
-            if (typeof this._layers[layer].setText === 'function') {
-                this._layers[layer].setText(text, options);
-            }
-        }
-        return this;
-    }
-});
-
-
-
-})();

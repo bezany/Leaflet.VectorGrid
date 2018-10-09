@@ -90,7 +90,8 @@ export var PolylineTextPath = {
             svg.removeChild(pattern);
 
             /* Create string as long as path */
-            text = new Array(Math.ceil(this._path.getTotalLength() / alength)).join(text);
+            // fix https://github.com/makinacorpus/Leaflet.TextPath/pull/65/files
+            text = new Array(Math.ceil(this._path.getTotalLength() / (alength || 1))).join(text);
         }
 
         /* Put it along the path using textPath */

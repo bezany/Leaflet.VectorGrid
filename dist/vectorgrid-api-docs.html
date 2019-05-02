@@ -276,6 +276,15 @@ Extends Leaflet&#39;s <code>L.GridLayer</code>.</p>
 <code>function(feat) { return feat.properties.uniqueIdField; }</code>.
 Must be defined for <code>setFeatureStyle</code> to work.</td>
 	</tr>
+	<tr id='vectorgrid-filter'>
+		<td><code><b>filter</b></code></td>
+		<td><code>Function</code>
+		<td><code>undefined</code></td>
+		<td>A Function that will be used to decide whether to include a feature or not
+depending on feature properties and zoom, e.g.
+<code>function(properties, zoom) { return true; }</code>.
+The default is to include all features. Similar to L.GeoJSON filter option.</td>
+	</tr>
 </tbody></table>
 
 </section>
@@ -302,6 +311,12 @@ Must be defined for <code>setFeatureStyle</code> to work.</td>
 		<td><p>Given the unique ID for a vector features (as per the <code>getFeatureId</code> option),
 re-symbolizes that feature across all tiles it appears in.
 Reverts the effects of a previous <code>setFeatureStyle</code> call.</p>
+</td>
+	</tr>
+	<tr id='vectorgrid-setfilter'>
+		<td><code><b>setFilter</b>(<nobr>&lt;Function&gt;</nobr> <i>filterFn</i>)</nobr></code></td>
+		<td><code>this</code></td>
+		<td><p>Sets filter function to filter displayed features.</p>
 </td>
 	</tr>
 	<tr id='vectorgrid-getdatalayernames'>
@@ -338,9 +353,9 @@ this function must return a <code>Promise</code> for a vector tile.</p>
 </section>
 
 
-</section><h2 id='linesymbolizer'>LineSymbolizer</h2><p>A symbolizer for lines. Can be applied to line and polygon features.</p>
+</section><h2 id='fillsymbolizer'>FillSymbolizer</h2><p>A symbolizer for filled areas. Applies only to polygon features.</p>
 
-<h2 id='fillsymbolizer'>FillSymbolizer</h2><p>A symbolizer for filled areas. Applies only to polygon features.</p>
+<h2 id='linesymbolizer'>LineSymbolizer</h2><p>A symbolizer for lines. Can be applied to line and polygon features.</p>
 
 <h2 id='pointsymbolizer'>PointSymbolizer</h2><p>A symbolizer for points.</p>
 

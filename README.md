@@ -10,7 +10,7 @@ Display gridded vector data (sliced [GeoJSON](http://geojson.org/), [TopoJSON](h
 Integrates [Leaflet.TextPath](https://github.com/makinacorpus/Leaflet.TextPath).
 For usage add in style of layer new propery `TextPath` like this:
 
-```json
+```javascript
 TextPath: {
   text: ' ► ',
   options: {repeat: true, attributes: {fill: 'red'}}

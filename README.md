@@ -7,7 +7,21 @@ Display gridded vector data (sliced [GeoJSON](http://geojson.org/), [TopoJSON](h
 
 ## This fork
 
-Integrate [Leaflet.TextPath](https://github.com/makinacorpus/Leaflet.TextPath).
+Integrates [Leaflet.TextPath](https://github.com/makinacorpus/Leaflet.TextPath).
+For usage add in style of layer new propery `TextPath` like this:
+
+```json
+TextPath: {
+  text: ' ► ',
+  options: {repeat: true, attributes: {fill: 'red'}}
+}
+```
+
+Where
+
+* text - text over line
+
+* options - [see Leaflet.TextPath options](https://github.com/makinacorpus/Leaflet.TextPath#options)
 
 ## Demos
 
